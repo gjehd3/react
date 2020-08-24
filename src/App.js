@@ -6,4 +6,4 @@ function App() {
   return <div>{name || '리액트'}</div>;
 }
 
-export default App;
+export default App; 
