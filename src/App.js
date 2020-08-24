@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <div className="react">{name}</div>
-      <input>
+      <input></input>
     </>
   );
 }
