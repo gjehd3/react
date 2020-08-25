@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; //4장 리액트 이벤트 시스템
 
 const Say = () => {
   const [message, setMessage] = useState('');
