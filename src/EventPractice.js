@@ -9,7 +9,7 @@ class EventPractice extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-  }
+  } // 메서드를 this와 바인딩 하였다
 
   handleChange(e) {
     this.setState({
