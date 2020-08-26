@@ -1,5 +1,1 @@
-<MyComponent
-  ref={(ref) => {
-    this.MyComponent = ref;
-  }}
-/>;
+arr.map(callback, [thisArg]);
