@@ -1,1 +1,6 @@
-shouldComponentUpdate(nextProps, nextState) { ... }
+getSnaapshotBeforeUpdate(prevProps, prevState) {
+    if(prevState.array !== this.state.array) {
+        const { scrollTop, scrollHeight } = this.list
+        return { scrollTop, scrollHeight };
+    }
+}
