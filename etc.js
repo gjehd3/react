@@ -1,1 +1,1 @@
-componentDidUpdate(prevProps, prevState, snapshot) { ... }
+componentWillUnmout() { ... }
