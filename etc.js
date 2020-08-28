@@ -1,1 +1,1 @@
-render() { ... }
+constructor(props) { ... }
