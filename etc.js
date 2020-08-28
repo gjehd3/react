@@ -1,1 +1,1 @@
-componentDidMount() { ... }
+shouldComponentUpdate(nextProps, nextState) { ... }
