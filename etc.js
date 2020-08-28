@@ -1,6 +1,1 @@
-getSnaapshotBeforeUpdate(prevProps, prevState) {
-    if(prevState.array !== this.state.array) {
-        const { scrollTop, scrollHeight } = this.list
-        return { scrollTop, scrollHeight };
-    }
-}
+componentDidUpdate(prevProps, prevState, snapshot) { ... }
