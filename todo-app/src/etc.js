@@ -5,5 +5,5 @@ const nextComplexObject = {
     enabled: false,
   },
 };
-console.log(complexObject === nextComplexObject); // false
-console.log(complexObject.objectInside === nextComplexObject.objectInside); // false
+console.log(complexObject === nextComplexObject); //  false
+console.log(complexObject.objectInside === nextComplexObject.objectInside); //  false
