@@ -1,6 +1,6 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom'
-import WithRouterSample from './WithRouterSample'
+import { withRouter } from 'react-router-dom';
+import WithRouterSample from './WithRouterSample';
 
 
 const data = {
