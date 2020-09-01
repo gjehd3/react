@@ -56,10 +56,8 @@ const render = () => {
     counter.innerText = state.counter;
 };
 
-
-
 render();
-store.subscrib(render);
+store.subscribe(render);
 
 divToggle.onclick = () => {
     store.dispatch(toggleSwitch());
