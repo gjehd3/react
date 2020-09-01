@@ -6,3 +6,5 @@ const loggerMiddleware = store => next => action => {
     console.log('다음 상태', store.getState()); // 업데이트된 상태
     console.groupEnd(); // 그룹 끝
 };
+
+export default loggerMiddleware;
