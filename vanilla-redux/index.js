@@ -59,4 +59,4 @@ const render = () => {
 
 
 render();
-
+store.subscrib(render);
