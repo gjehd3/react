@@ -1,12 +1,16 @@
+const nodeExternals = require('webpack-node=externals')
 const paths = require('./paths');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent'); // CSS Module의 고유 className을 만들 때 필요한 옵션
-
+const webpack = require('webpack')
+const getClientEnvironment = require('./env')
 
 const cssRegex = /.css$/;
 const cssModuleRegex = /.module.css$/;
 const sassRegex = /.(scss|sass)$/;
 const sassModuleRegex = /.module.(scss|sass)$/;
-const nodeExternals = require('webpack-node=externals')
+
+const publicUrl = paths.servedPath.slice(0, -1);
+const env = getClientEnvironment(publicUrl);
 
 
 
@@ -129,5 +133,8 @@ module.exports = {
     resolve: {
         modules: ['node_modules']
     },
-    externals: [nodeExternals()]
+    externals: [nodeExternals()],
+    plugins: [
+        new webpack.DefinePlugin(env.stringified)
+    ]
 };
