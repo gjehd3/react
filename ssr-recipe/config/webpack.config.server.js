@@ -61,7 +61,7 @@ module.exports = {
                         //  exportOnlyLocals: true 옵션을 설정해야 실제 CSS 파일을 생성하지 않습니다.
                         loader: require.resolve('css-loader'),
                         options: {
-                            exportOnlyLocals: true
+                            onlyLocals: true
                         }
                     },
                     // CSS Module을 위한 처리
@@ -70,7 +70,7 @@ module.exports = {
                         loader: require.resolve('css-loader'),
                         options: {
                             modules: true,
-                            exportOnlyLocals: true,
+                            onlyLocals: true,
                             getLocalIdent: getCSSModuleLocalIdent
                         }
                     },
@@ -82,7 +82,7 @@ module.exports = {
                             {
                                 loader: require.resolve('css-loader'),
                                 options: {
-                                    exportOnlyLocals: true
+                                    onlyLocals: true
                                 }
                             },
                             require.resolve('sass-loader')
@@ -97,7 +97,7 @@ module.exports = {
                                 loader: require.resolve('css-loader'),
                                 options: {
                                     modules: true,
-                                    exportOnlyLocals: true,
+                                    onlyLocals: true,
                                     getLocalIdent: getCSSModuleLocalIdent
                                 }
                             },
@@ -106,7 +106,7 @@ module.exports = {
                     },
                     // url-loader를 위한 설정
                     {
-                        test: [/.bmp$/, /.gif$/, /.jpe?g$/, /.png$/],
+                        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
                         loader: require.resolve('url-loader'),
                         options: {
                             emitFile: false, // 파일을 따로 저장하지 않는 옵션
@@ -119,7 +119,7 @@ module.exports = {
                     // file-loader를 사용합니다.
                     {
                         loader: require.resolve('file-loader'),
-                        exclude: [/.(js|mjs|jsx|ts|tsx)$/, /.html$/, /.json$/],
+                        exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
                         options: {
                             emitFile: false, // 파일을 따로 저장하지 않는 옵션
                             name: 'static/media/[name].[hash:8].[ext]'
