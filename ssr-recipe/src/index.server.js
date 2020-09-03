@@ -7,8 +7,8 @@ import path from 'path';
 import fs from 'fs';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import rootReducer from './modules';
+import createSagaMiddleware from 'redux-saga';
+import rootReducer, { rootSaga } from './modules';
 import PreloadContext from './lib/PreloadContext'
 
 
@@ -64,7 +64,14 @@ const serverRender = async (req, res, next) => {
 
 
     const context = {};
-    const store = createStore(rootReducer, applyMiddleware(thunk));
+    const sagaMiddleware = createSagaMiddleware();
+
+    const store = createStore(
+        rootReducer,
+        applyMiddleware(thunk, sagaMiddleware)
+    );
+
+    sagaMiddleware.run(rootSaga);
 
     const preloadContext = {
         done: false,
