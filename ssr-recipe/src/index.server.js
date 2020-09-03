@@ -8,6 +8,7 @@ import fs from 'fs';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
+import thunk from 'redux-thunk';
 import rootReducer, { rootSaga } from './modules';
 import PreloadContext from './lib/PreloadContext'
 import { END } from 'redux-saga';
@@ -72,7 +73,7 @@ const serverRender = async (req, res, next) => {
         applyMiddleware(thunk, sagaMiddleware)
     );
 
-    sagaMiddleware.run(rootSaga);
+    const sagaPromise = sagaMiddleware.run(rootSaga).toPromise();
 
     const preloadContext = {
         done: false,
