@@ -89,7 +89,7 @@ const serverRender = (req, res, next) => {
     }
     preloadContext.done = true;
     const root = ReactDOMServer.renderToString(jsx); // 렌더링을 하고
-
+    //https://redux.js.org/recipes/server-rendering#security-considerations
     const stateString = JSON.stringify(store.getState()).replace(/</g, '\\u003c');
     const stateScript = `<script>__PRELOADED_STATE__=${stateString}</script>`;
 
