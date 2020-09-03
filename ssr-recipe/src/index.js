@@ -7,14 +7,23 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import rootReducer from './modules';
+import createSagaMiddleware from 'redux-saga';
+import rootReducer, { rootSaga } from './modules';
+
+
+const sagaMiddleware = createSagaMiddleware();
+
 
 
 const store = createStore(
   rootReducer,
-  window.__PRELOADED_STATE__,
-  applyMiddleware(thunk)
+  window.__PRELOADEDSTATE__, // 이 값을 초기 상태로 사용함
+  applyMiddleware(thunk, sagaMiddleware)
 );
+
+
+
+sagaMiddleware.run(rootSaga);
 
 
 
