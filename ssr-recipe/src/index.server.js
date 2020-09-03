@@ -26,7 +26,7 @@ const chunks = Object.keys(manifest.files)
 
 
 
-function createPage(root) {
+function createPage(root, stateScript) {
     return `<!DOCTYPE html>
   <html lang="en">
             <head>
@@ -45,8 +45,9 @@ function createPage(root) {
                 <div id="root">
                     ${root}
                 </div>
+                ${stateScript}
                 <script src="${manifest.files['runtime~main.js']}"></script>
-  ${chunks}
+                ${chunks}
                 <script src="${manifest.files['main.js']}"></script>
             </body>
         </html>
@@ -88,7 +89,11 @@ const serverRender = (req, res, next) => {
     }
     preloadContext.done = true;
     const root = ReactDOMServer.renderToString(jsx); // 렌더링을 하고
-    res.send(createPage(root)); // 결과물을 응답합니다.
+
+    const stateString = JSON.stringify(store.getState()).replace(/</g, '\\u003c');
+    const stateScript = `<script>__PRELOADED_STATE__=${stateString}</script>`;
+
+    res.send(createPage(root, stateScript)); // 결과물을 응답합니다.
 };
 
 
