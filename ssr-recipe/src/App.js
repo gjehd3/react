@@ -11,9 +11,9 @@ const App = () => {
     <div>
       <Menu />
       <hr />
-      <Route path='/red' component={RedPage} />
-      <Route path='/blue' component={BluePage} />
-      <Route path='./users' component={UsersPage} />
+      <Route path="/red" component={RedPage} />
+      <Route path="/blue" component={BluePage} />
+      <Route path="/users" component={UsersPage} />
     </div>
   );
 };
