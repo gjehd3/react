@@ -12,23 +12,11 @@ import thunk from 'redux-thunk';
 import rootReducer, { rootSaga } from './modules';
 import PreloadContext from './lib/PreloadContext'
 import { END } from 'redux-saga';
+import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 
+const statsFile = path.resolve('./build/loadable-stats.json');
 
-// asset-manifest.json에서 파일 경로들을 조회합니다.
-const manifest = JSON.parse(
-    fs.readFileSync(path.resolve('./build/asset-manifest.json'), 'utf8')
-);
-
-
-
-const chunks = Object.keys(manifest.files)
-    .filter(key => /chunk\.js$ /.exec(key)) // chunk.js로 끝나는 키를 찾아서
-    .map(key => `<script src="${manifest.files[key]}"></script>`)// 스크립트 태그로 변환하고
-    .join(''); // 합침
-
-
-
-function createPage(root, stateScript) {
+function createPage(root, tags) {
     return `<!DOCTYPE html>
   <html lang="en">
             <head>
@@ -40,17 +28,15 @@ function createPage(root, stateScript) {
                 />
                 <meta name="theme-color" content="#000000" />
                 <title>React App</title>
-                <link gref="${manifest.files['main.css']}" rel="stylesheet" />
+                ${tags.styles}
+                ${tags.links}
             </head>
             <body>
                 <noscript>You need to enable JavaScript to run this app.</noscript>
                 <div id="root">
                     ${root}
                 </div>
-                ${stateScript}
-                <script src="${manifest.files['runtime~main.js']}"></script>
-                ${chunks}
-                <script src="${manifest.files['main.js']}"></script>
+                ${tags.Script}
             </body>
         </html>
   `;
@@ -79,14 +65,19 @@ const serverRender = async (req, res, next) => {
         done: false,
         promises: []
     };
+
+    const extractor = new ChunkExtractor({ statsFile });
+
     const jsx = (
-        <PreloadContext.Provider value={preloadContext}>
-            <Provider store={store}>
-                <StaticRouter location={req.url} context={context}>
-                    <App />
-                </StaticRouter>
-            </Provider>
-        </PreloadContext.Provider>
+        <ChunkExtractorManager extractor={extractor}>
+            <PreloadContext.Provider value={preloadContext}>
+                <Provider store={store}>
+                    <StaticRouter location={req.url} context={context}>
+                        <App />
+                    </StaticRouter>
+                </Provider>
+            </PreloadContext.Provider>
+        </ChunkExtractorManager >
     );
 
     ReactDOMServer.renderToStaticMarkup(jsx); // renderToStaticMarkup으로 한번 렌더링합니다.
@@ -99,7 +90,17 @@ const serverRender = async (req, res, next) => {
     }
     preloadContext.done = true;
     const root = ReactDOMServer.renderToString(jsx); // 렌더링을 합니다.
-    res.send(createPage(root)); // 결과물을 응답합니다.
+
+    const stateString = JSON.stringify(store.getState()).replace(/</g, '\\u003c');
+    const stateScript = `<script>__PRELOADED_STATE__ = ${stateString}</script>`;
+
+    const tags = {
+        scripts: stateScript + extractor.getScriptTags(),
+        links: extractor.getLinkTags(),
+        styles: extractor.getStyleTags()
+    };
+
+    res.send(createPage(root, tags)); // 결과물을 응답합니다.
 };
 
 
