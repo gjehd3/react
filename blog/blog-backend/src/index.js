@@ -2,7 +2,6 @@ const Koa = require('koa');
 const Router = require('koa-router');
 
 const api = require('./api');
-const { route } = require('./api');
 
 const app = new Koa();
 const router = new Router();
