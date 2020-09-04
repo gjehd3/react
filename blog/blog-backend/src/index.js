@@ -2,9 +2,18 @@ require('dotenv').config();
 const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
+const mongoose = require('mongoose');
 
-const { PORT } = process.env;
+const { PORT, MONGO_URI } = process.env;
 
+mongoose
+  .connect(MONGO_URI, { useNewUrlParser: true, useFindAndModify: false })
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((e) => {
+    console.error(e);
+  });
 const api = require('./api');
 
 const app = new Koa();
