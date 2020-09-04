@@ -1,5 +1,5 @@
 import Post from '../../models/post';
-import mongoose from 'mongoose';
+import mongoose, { set } from 'mongoose';
 import Joi from '@hapi/joi';
 
 const { ObjectId } = mongoose.Types;
@@ -56,6 +56,8 @@ export const list = async (ctx) => {
       .limit(10)
       .skip((page - 1) * 10)
       .exec();
+    const postCount = await Post.countDocuments().exec();
+    ctx.set('Last-Page', Math.ceil(postCount / 10));
     ctx.body = posts;
   } catch (e) {
     ctx.throw(500, e);
