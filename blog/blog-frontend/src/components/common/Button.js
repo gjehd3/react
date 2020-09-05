@@ -50,4 +50,4 @@ const Button = ({ to, history, ...rest }) => {
   return <StyledButton {...rest} onClick={onClick} />;
 };
 
-export default Button;
+export default withRouter(Button);
