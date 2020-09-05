@@ -90,4 +90,5 @@ export const check = async (ctx) => {
   }
   ctx.body = user;
 };
+
 export const logout = async (ctx) => {};
