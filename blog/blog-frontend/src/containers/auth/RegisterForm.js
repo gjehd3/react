@@ -89,4 +89,4 @@ const RegisterForm = ({ history }) => {
   );
 };
 
-export default withRouter(RegisterForm);
+export default withRouter(RegisterForm); //코드 수정
