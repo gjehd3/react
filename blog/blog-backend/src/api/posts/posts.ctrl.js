@@ -83,7 +83,7 @@ export const list = async (ctx) => {
 
 export const read = (ctx) => {
   ctx.body = ctx.state.post;
-};
+}; // id로 포스트를 찾는 코드 간소화
 
 export const remove = async (ctx) => {
   const { id } = ctx.params;
