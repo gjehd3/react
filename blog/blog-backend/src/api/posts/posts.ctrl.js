@@ -5,6 +5,30 @@ import sanitizeHtml from 'sanitize-html';
 
 const { ObjectId } = mongoose.Types;
 
+const sanitizeOption = {
+  allowedTags: [
+    'h1',
+    'h2',
+    'b',
+    'i',
+    'u',
+    's',
+    'p',
+    'ul',
+    'ol',
+    'li',
+    'blockquote',
+    'a',
+    'img',
+  ],
+  allowedAttributes: {
+    a: ['href', 'name', 'target'],
+    img: ['src'],
+    li: ['class'],
+  },
+  allowedSchemes: ['data', 'http'],
+};
+
 // html을 없애고 내용이 너무 길면 200자로 제한하는 함수
 const removeHtmlAndShorten = (body) => {
   const filtered = sanitizeHtml(body, {
