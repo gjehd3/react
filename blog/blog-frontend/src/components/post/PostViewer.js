@@ -56,12 +56,12 @@ const PostViewer = ({ post, error, loading }) => {
     return <PostViewerBlock>오류 발생!</PostViewerBlock>;
   }
 
-  // 로딩 중이거나 아직 포스트 데이터가 없을 때
   if (loading || !post) {
     return null;
   }
 
   const { title, body, user, publishedDate, tags } = post;
+
   return (
     <PostViewerBlock>
       <PostHead>
